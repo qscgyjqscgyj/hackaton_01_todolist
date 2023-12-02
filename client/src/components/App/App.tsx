@@ -1,7 +1,7 @@
 import './App.css';
 
 function App() {
-    return <div>React App</div>;
+    return <div data-test-id="app_container">React App</div>;
 }
 
 export default App;
