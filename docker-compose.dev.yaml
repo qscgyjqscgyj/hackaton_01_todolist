@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   hackaton-app:
-    container_name: hackaton-express-app
     build:
       dockerfile: Dockerfile.dev
     ports:
