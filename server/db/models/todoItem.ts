@@ -1,24 +1,15 @@
-'use strict';
-import { TodoItem } from 'shared/types';
+import { DataTypes } from 'sequelize';
 
-const { Model } = require('sequelize');
+import { sequelizeDB } from '../sequelize';
 
-module.exports = (sequelize: any, DataTypes: TodoItem) => {
-    class TodoItem extends Model {
-        static associate(models: any) {
-            // define association here
-        }
-    }
-    TodoItem.init(
-        {
-            name: DataTypes.name,
-            id: DataTypes.id,
-            completed: DataTypes.completed,
-        },
-        {
-            sequelize,
-            modelName: 'TodoItem',
-        },
-    );
-    return TodoItem;
-};
+export const TodoItem = sequelizeDB.define(
+    'TodoItem',
+    {
+        name: DataTypes.STRING,
+        id: { type: DataTypes.INTEGER, primaryKey: true },
+        completed: DataTypes.BOOLEAN,
+    },
+    {},
+);
+
+console.log('??????', TodoItem === sequelizeDB.models.TodoItem);
