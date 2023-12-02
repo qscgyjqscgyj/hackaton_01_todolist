@@ -20,13 +20,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "plugins":[
+      {
+         "transform":"typescript-transform-paths"
+      },
+      {
+         "transform":"typescript-transform-paths",
+         "afterDeclarations": true
+      }
+   ],
     "paths": {
-      "src/*": ["./*"],
+      "root/*": ["./*"],
       "shared/*": ["../shared/*"]
     },
   },
   "include": [
-    "src"
+    "./"
   ],
   "exclude": [
     "node_modules"
