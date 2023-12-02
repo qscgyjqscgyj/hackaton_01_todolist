@@ -2,11 +2,28 @@ import useTodoList from './hooks';
 import './styles.css';
 
 export default function TodoList() {
-    const { todos, toggleTodoItem, deleteTodoItem } = useTodoList();
+    const {
+        todos,
+        newTodoItemName,
+        newTodoItemNameChangeHandler,
+        toggleTodoItemHandler,
+        deleteTodoItemHandler,
+        addTodoItemHandler,
+    } = useTodoList();
 
     return (
-        <div className="container">
+        <div className="todoListContainer">
             <h1>Todo List</h1>
+
+            <div className="addNewTodoWrapper">
+                <input
+                    value={newTodoItemName}
+                    onChange={newTodoItemNameChangeHandler}
+                    type="text"
+                    placeholder="Add Todo"
+                />
+                <button onClick={addTodoItemHandler}>Add</button>
+            </div>
 
             <div className="todoItemsWrapper">
                 {todos.map((todo) => (
@@ -15,14 +32,19 @@ export default function TodoList() {
                             <input
                                 type="checkbox"
                                 checked={todo.completed}
-                                onChange={() => toggleTodoItem(todo)}
+                                onChange={() => toggleTodoItemHandler(todo)}
                             />
                         </div>
+
                         <div className={`todoItemText ${todo.completed ? 'completed' : ''}`}>
                             {todo.name}
                         </div>
+
                         <div className="todoItemActions">
-                            <button onClick={() => deleteTodoItem(todo)} className="todoItemButton">
+                            <button
+                                onClick={() => deleteTodoItemHandler(todo)}
+                                className="todoItemButton"
+                            >
                                 Delete
                             </button>
                         </div>
