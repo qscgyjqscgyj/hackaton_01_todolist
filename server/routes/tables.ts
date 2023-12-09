@@ -1,8 +1,8 @@
 import express from 'express';
 import { TodoItem } from '../db/models/todoItem';
-const router = express.Router();
+const tablesRouter = express.Router();
 
-router.get('/', async (_req, res) => {
+tablesRouter.get('/:tableName', async (_req, res) => {
     try {
         const todoItems = await TodoItem.findAll();
         res.json(todoItems);
@@ -12,7 +12,7 @@ router.get('/', async (_req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+tablesRouter.post('/', async (req, res) => {
     const { name, completed } = req.body;
 
     try {
@@ -27,4 +27,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-export default router;
+export default tablesRouter;
