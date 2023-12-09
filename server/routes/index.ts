@@ -1,10 +1,10 @@
 import express from 'express';
-import { TodoItem } from '../db/models/todoItem';
+import TodoItems from '../db/models/todoItem';
 const router = express.Router();
 
 router.get('/', async (_req, res) => {
     try {
-        const todoItems = await TodoItem.findAll();
+        const todoItems = await TodoItems.findAll();
         res.json(todoItems);
     } catch (error) {
         console.error('Error fetching todo items:', error);
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     const { name, completed } = req.body;
 
     try {
-        const newTodoItem = await TodoItem.create({
+        const newTodoItem = await TodoItems.create({
             name: name,
             completed: completed,
         });

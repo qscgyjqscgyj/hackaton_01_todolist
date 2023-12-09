@@ -1,28 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TodoItem } from 'shared/types';
 
-const INITIAL_TODOS: TodoItem[] = [
-    {
-        id: 1,
-        name: 'Learn React',
-        completed: false,
-    },
-    {
-        id: 2,
-        name: 'Learn TypeScript',
-        completed: false,
-    },
-    {
-        id: 3,
-        name: 'Learn GraphQL',
-        completed: false,
-    },
-];
+import { getTableItems } from '../../services/getTableItems';
+import { createTableItem } from '../../services/createTableItem';
 
 export default function useTodoList() {
-    const [todos, setTodos] = useState<TodoItem[]>(INITIAL_TODOS);
+    const [todos, setTodos] = useState<TodoItem[]>([]);
     const [newTodoItemName, setNewTodoItemName] = useState<string>('');
+
+    const loadTodoItems = async () => {
+        const todoItemsResponse = await getTableItems('TodoItems');
+        setTodos(todoItemsResponse);
+    };
 
     const toggleTodoItemHandler = (todoItem: TodoItem) => {
         setTodos((prevTodos) => {
@@ -49,29 +39,27 @@ export default function useTodoList() {
         });
     };
 
-    const addTodoItemHandler = () => {
+    const addTodoItemHandler = async () => {
         if (!newTodoItemName) {
             return;
         }
 
-        setTodos((prevTodos) => {
-            const newTodoItem: TodoItem = {
-                id: todos.length + 1,
-                name: newTodoItemName,
-                completed: false,
-            };
-
-            const updatedTodos = [...prevTodos, newTodoItem];
-
-            return updatedTodos;
+        await createTableItem('TodoItems', {
+            name: newTodoItemName,
+            completed: false,
         });
 
+        await loadTodoItems();
         setNewTodoItemName('');
     };
 
     const newTodoItemNameChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewTodoItemName(event.target.value);
     };
+
+    useEffect(() => {
+        loadTodoItems();
+    }, []);
 
     return {
         todos,

@@ -1,12 +1,11 @@
 import { DataTypes } from 'sequelize';
-
 import { sequelizeDB } from '../sequelize';
 
-export const TodoItem = sequelizeDB.define(
+const TodoItems = sequelizeDB.define(
     'TodoItems',
     {
         name: DataTypes.STRING,
-        id: { type: DataTypes.INTEGER, primaryKey: true },
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         completed: DataTypes.BOOLEAN,
     },
     {
@@ -14,3 +13,5 @@ export const TodoItem = sequelizeDB.define(
         updatedAt: false,
     },
 );
+
+export default TodoItems;

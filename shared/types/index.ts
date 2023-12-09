@@ -3,3 +3,5 @@ export type TodoItem = {
     name: string;
     completed: boolean;
 };
+
+export type TableNames = 'TodoItems';
