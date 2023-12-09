@@ -11,5 +11,3 @@ export const TodoItem = sequelizeDB.define(
     },
     {},
 );
-
-console.log('??????', TodoItem === sequelizeDB.models.TodoItem);
